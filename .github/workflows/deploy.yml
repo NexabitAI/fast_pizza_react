@@ -38,4 +38,4 @@ jobs:
             xvfb-run -a npm run build
 
             # Restart all PM2 apps
-            pm2 restart all 
+            pm2 restart all || true
