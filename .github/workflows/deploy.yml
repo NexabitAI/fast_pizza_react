@@ -27,9 +27,9 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
 
-            # Clean old dependencies and previous build
-            rm -rf node_modules
-            rm -rf dist
+            # Clean old dependencies, previous build, and npm cache
+            rm -rf node_modules dist
+            npm cache clean --force
 
             # Install dependencies using ci for faster and consistent install
             npm ci --omit=dev
