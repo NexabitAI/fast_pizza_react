@@ -27,11 +27,14 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
 
-            
+            # Clean npm cache and old modules
+            rm -rf node_modules dist
             npm cache clean --force
 
-          
-            # Build using virtual framebuffer to avoid Qt GUI errors
+            # Install dependencies
+            npm install --omit=dev
+
+            # Build project
             npm run build
 
             # Restart all PM2 apps
