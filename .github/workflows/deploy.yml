@@ -22,6 +22,10 @@ jobs:
             cd /var/www/fast_pizza_react
             git fetch origin main
             git reset --hard origin/main
-            npm install --production || true
-            npm run build || true
+
+            # Clean old dependencies and build
+            rm -rf node_modules
+            rm -rf dist
+            npm install --production
+            npm run build
             pm2 restart all || true
