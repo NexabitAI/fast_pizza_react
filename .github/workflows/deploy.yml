@@ -2,7 +2,7 @@ name: Deploy to VPS
 on:
   push:
     branches:
-      - main   # jis branch pe tum deploy karna chahte ho
+      - main   # jis branch pe deploy karna chahte ho
 
 jobs:
   deploy:
@@ -20,7 +20,7 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd /var/www/fast_pizza_react
-            git reset --hard
-            git pull origin main
+            git fetch origin main
+            git reset --hard origin/main   # force sync with GitHub
             npm install --production || true
-            pm2 restart all || true   # agar tum pm2 use karte ho
+            pm2 restart all || true        # agar tum pm2 use karte ho
