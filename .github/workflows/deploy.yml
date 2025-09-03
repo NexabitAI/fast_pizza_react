@@ -30,8 +30,11 @@ jobs:
             rm -rf node_modules
             rm -rf dist
 
-            # Install dependencies and build
+            # Install dependencies
             npm install --production
+
+            # Force headless build to avoid Qt errors
+            export QT_QPA_PLATFORM=offscreen
             npm run build
 
             # Restart all PM2 apps
