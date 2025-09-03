@@ -18,6 +18,7 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
+          timeout: 1800  # 30 minutes
           script: |
             # Go to project root
             cd /var/www/fast_pizza_react
@@ -30,12 +31,11 @@ jobs:
             rm -rf node_modules
             rm -rf dist
 
-            # Install dependencies
-            npm install --production
+            # Install dependencies using ci for faster and consistent install
+            npm ci --omit=dev
 
-            # Force headless build to avoid Qt errors
-            export QT_QPA_PLATFORM=offscreen
-            npm run build
+            # Build using virtual framebuffer to avoid Qt GUI errors
+            xvfb-run -a npm run build
 
             # Restart all PM2 apps
-            pm2 restart all || true
+            pm2 restart all 
